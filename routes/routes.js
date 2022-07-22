@@ -1,49 +1,23 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
+
+import {
+  getAllFoods,
+  createFood,
+  readFood,
+  updateFood,
+  deleteFood,
+} from "../controllers/controllers.js";
 
 const router = express.Router();
 
-let food = [];
+router.get("/", getAllFoods);
 
-router.get("/", (req, res) => {
-  res.send(food);
-});
+router.post("/", createFood);
 
-router.post("/", (req, res) => {
-  const foodItem = req.body;
+router.get("/:id", readFood);
 
-  food.push({ ...foodItem, id: uuidv4() });
+router.patch("/:id", updateFood);
 
-  res.send(`A food of ${foodItem.name} has been added to the database`);
-});
-
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-
-  const chosenFood = food.find((foodItem) => (foodItem.id = id));
-  res.send(chosenFood);
-});
-
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-
-  food = food.filter((foodItem) => foodItem.id != id);
-  res.send(`The food with the id of ${id} has been deleted`);
-});
-
-router.patch("/:id", (req, res) => {
-  const { id } = req.params;
-
-  const { name, description, price } = req.body;
-  const foodToBeUpdated = food.find((foodItem) => foodItem.id === id);
-
-  if (name) foodToBeUpdated.name = name;
-
-  if (description) foodToBeUpdated.description = description;
-
-  if (price) foodToBeUpdated.price = price;
-
-  res.send(`The food with the id of ${id} has been updated`);
-});
+router.delete("/:id", deleteFood);
 
 export default router;
