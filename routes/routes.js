@@ -1,4 +1,5 @@
 import express from "express";
+import { v4 as uuidv4 } from "uuid";
 
 const router = express.Router();
 
@@ -16,16 +17,13 @@ const food = [
 ];
 
 router.get("/", (req, res) => {
-  console.log(food);
   res.send(food);
 });
 
 router.post("/", (req, res) => {
-  console.log("POST ROUTE REACHED");
-
   const foodItem = req.body;
 
-  food.push(foodItem);
+  food.push({ ...foodItem, id: uuidv4() });
 
   res.send(`A food of ${foodItem.name} has been added to the database`);
 });
