@@ -12,7 +12,7 @@ const food = [
 
 router.get("/", (req, res) => {
   console.log(food);
-  res.send("Hello from the food page");
+  res.send(food);
 });
 
 export default router;
