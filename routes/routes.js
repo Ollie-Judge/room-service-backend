@@ -31,4 +31,19 @@ router.delete("/:id", (req, res) => {
   res.send(`The food with the id of ${id} has been deleted`);
 });
 
+router.patch("/:id", (req, res) => {
+  const { id } = req.params;
+
+  const { name, description, price } = req.body;
+  const foodToBeUpdated = food.find((foodItem) => foodItem.id === id);
+
+  if (name) foodToBeUpdated.name = name;
+
+  if (description) foodToBeUpdated.description = description;
+
+  if (price) foodToBeUpdated.price = price;
+
+  res.send(`The food with the id of ${id} has been updated`);
+});
+
 export default router;
