@@ -1,20 +1,30 @@
-import { v4 as uuidv4 } from "uuid";
+import Food from "../models/model.js";
 
-let food = [];
+export const getAllFoods = async (req, res) => {
+  try {
+    const Foods = await Food.find();
 
-export const getAllFoods = (req, res) => {
-  res.send(food);
+    console.log(Foods);
+
+    res.send(200).json(Foods);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 };
 
-export const createFood = (req, res) => {
+export const createFood = async (req, res) => {
   const foodItem = req.body;
 
-  food.push({ ...foodItem, id: uuidv4() });
-
-  res.send(`A food of ${foodItem.name} has been added to the database`);
+  const newFood = new Food(foodItem);
+  try {
+    await newFood.save();
+    res.send(201).json(newFood);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
 };
 
-export const readFood = (req, res) => {
+/*export const readFood = (req, res) => {
   const { id } = req.params;
 
   const chosenFood = food.find((foodItem) => (foodItem.id = id));
@@ -42,3 +52,4 @@ export const deleteFood = (req, res) => {
   food = food.filter((foodItem) => foodItem.id != id);
   res.send(`The food with the id of ${id} has been deleted`);
 };
+*/

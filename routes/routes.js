@@ -1,23 +1,20 @@
 import express from "express";
+const router = express.Router();
 
 import {
   getAllFoods,
   createFood,
-  readFood,
+  /*readFood,
   updateFood,
-  deleteFood,
+  deleteFood,*/
 } from "../controllers/controllers.js";
-
-const router = express.Router();
 
 router.get("/", getAllFoods);
 
 router.post("/", createFood);
 
-router.get("/:id", readFood);
-
+/* router.get("/:id", readFood);
 router.patch("/:id", updateFood);
-
 router.delete("/:id", deleteFood);
-
+*/
 export default router;
